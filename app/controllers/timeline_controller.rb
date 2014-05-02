@@ -26,20 +26,21 @@ class TimelineController < ApplicationController
 
     	@mirror = @client.discovered_api('mirror', 'v1')
     	
-    	#insert_subscription( {
-      #	"kind" => "mirror#subscription",
-      #	"collection" => "timeline",
-      #	"userToken" => session[:user_id],
-      #	"verifyToken" => "monkey",
-      #	"operation" => ["UPDATE"],
-			#	"callbackUrl" => ENV['GOOGLE_SUBSCRIPTION_PROXY'] + ENV['HOSTNAME'] + '/update_dropcam_card'
-			#})
+    	insert_subscription( {
+      	"kind" => "mirror#subscription",
+      	"collection" => "timeline",
+      	"userToken" => session[:user_id],
+      	"verifyToken" => "monkey",
+      	"operation" => ["UPDATE"],
+				"callbackUrl" => ENV['GOOGLE_SUBSCRIPTION_PROXY'] + ENV['HOSTNAME'] + '/update_hue_card'
+			})
       
-			#puts 'Callback URL' + ENV['GOOGLE_SUBSCRIPTION_PROXY'] + ENV['HOSTNAME'] + '/update_dropcam_card'
-			#puts 'User session ID' + session[:user_id].to_s
+			puts 'Callback URL' + ENV['GOOGLE_SUBSCRIPTION_PROXY'] + ENV['HOSTNAME'] + '/update_hue_card'
+			puts 'User session ID' + session[:user_id].to_s
+			
 
     	insert_timeline_item( {
-      	text: "Kitchen bulb",
+      	text: hue_bulb[:name] + " bulb",
       	notification: { level: 'DEFAULT' },
       	sourceItemId: 2002,
       	menuItems: [

@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
-=======
+
   get "/auth/:provider/callback" => "sessions#create"
   delete "/signout" => "sessions#destroy", as: :signout
   post "/send_hue_card" => "timeline#send_hue_card", as: :send_hue_card
   post "/update_hue_card" => "timeline#update_hue_card", as: :update_hue_card
   root "timeline#index"
 
->>>>>>> copied dropcam-glass, added huey gem, timeline controller sends card and blinks light
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

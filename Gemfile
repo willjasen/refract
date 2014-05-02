@@ -38,8 +38,6 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-<<<<<<< HEAD
-=======
 # Use sassy bootstrap
 gem 'bootstrap-sass'
 
@@ -53,5 +51,3 @@ gem 'rest-client'
 
 # Use huey gem
 gem 'huey'
-
->>>>>>> copied dropcam-glass, added huey gem, timeline controller sends card and blinks light

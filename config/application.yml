@@ -1,4 +1,4 @@
-GLASS_CLIENT_ID: 435863930723-5kbkucavfnuhh3egd796b9e6ltdtt7qj.apps.googleusercontent.com
-GLASS_CLIENT_SECRET: P7mPkMnEnONcli2oB9-58GBl
-GOOGLE_SUBSCRIPTION_PROXY: https://mirrornotifications.appspot.com/forward?url=
-HOSTNAME: http://dg.willjasen.com:3000
+GLASS_CLIENT_ID: '340178224882-gejge6l6rkqcak4al516ejt0b74a86oc.apps.googleusercontent.com'
+GLASS_CLIENT_SECRET: 'ENw5yRh_ncCVgJ-BG7V4kjnZ'
+GOOGLE_SUBSCRIPTION_PROXY: 'https://mirrornotifications.appspot.com/forward?url='
+HOSTNAME: 'http://dg.willjasen.com:3000'

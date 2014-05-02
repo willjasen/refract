@@ -38,8 +38,6 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-<<<<<<< HEAD
-=======
 # Use sassy bootstrap
 gem 'bootstrap-sass'
 
@@ -51,7 +49,6 @@ gem 'omniauth-google-oauth2', :git => 'https://github.com/zquestz/omniauth-googl
 gem 'figaro'
 gem 'rest-client'
 
-# Use huey gem
-gem 'huey'
+# Use dropcam gem
+gem 'dropcam'
 
->>>>>>> copied dropcam-glass, added huey gem, timeline controller sends card and blinks light

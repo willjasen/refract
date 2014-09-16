@@ -17,9 +17,4 @@
 
 # Ignore application configuration
 /config/application.yml
-
-# Ignore temporary files
-/*~
-/*/*~
-/*/*/*~
-/*/*/*/*~
+/config/secrets.yml

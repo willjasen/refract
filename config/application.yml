@@ -1,4 +1,5 @@
-GLASS_CLIENT_ID: '340178224882-gejge6l6rkqcak4al516ejt0b74a86oc.apps.googleusercontent.com'
-GLASS_CLIENT_SECRET: 'ENw5yRh_ncCVgJ-BG7V4kjnZ'
+glass_client_id: <%= Rails.application.secrets.glass_client_id %>
+glass_client_secret: <%= Rails.application.secrets.glass_client_secret %>
 GOOGLE_SUBSCRIPTION_PROXY: 'https://mirrornotifications.appspot.com/forward?url='
-HOSTNAME: 'http://dg.willjasen.com:3000'
+hostname: 'refract-145367.use1-2.nitrousbox.com'
+bridge_wan_ip: <%= Rails.application.secrets.bridge_wan_ip %>

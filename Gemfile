@@ -51,3 +51,6 @@ gem 'rest-client'
 
 # Use huey gem
 gem 'huey'
+
+# Color
+gem 'color'

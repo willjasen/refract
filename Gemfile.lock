@@ -189,6 +189,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   coffee-rails (~> 4.0.0)
+  color
   figaro
   google-api-client
   huey

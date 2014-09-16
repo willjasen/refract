@@ -1,8 +1,8 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-provider :google_oauth2, ENV["GLASS_CLIENT_ID"], ENV["GLASS_CLIENT_SECRET"], {
+  provider :google_oauth2, ENV["glass_client_id"], ENV["glass_client_secret"], {
  access_type: 'offline',
  prompt: 'consent',
  scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/glass.timeline',
- redirect_uri: 'http://localhost:3000/auth/google_oauth2/callback'
+  redirect_uri: 'http://' + ENV['hostname'] + '/auth/google_oauth2/callback'
  }
 end

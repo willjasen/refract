@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501221800) do
+ActiveRecord::Schema.define(version: 20140912031059) do
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20140501221800) do
     t.string   "oauth_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "verify_token"
   end
 
 end

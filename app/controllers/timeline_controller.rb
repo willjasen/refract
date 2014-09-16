@@ -4,13 +4,13 @@ class TimelineController < ApplicationController
 
   def send_hue_card
 
-    hue_bulb = set_hue
+    setting = set_hue
 
   	credentials = User.get_credentials(session[:user_id])
 
   	data = {
-   		:client_id => ENV["GLASS_CLIENT_ID"],
-   		:client_secret => ENV["GLASS_CLIENT_SECRET"],
+      :client_id => ENV["glass_client_id"],
+      :client_secret => ENV["glass_client_secret"],
    		:refresh_token => credentials[:refresh_token],
    		:grant_type => "refresh_token"
 		}
@@ -30,36 +30,42 @@ class TimelineController < ApplicationController
       	"kind" => "mirror#subscription",
       	"collection" => "timeline",
       	"userToken" => session[:user_id],
-      	"verifyToken" => "monkey",
+        "verifyToken" => "monkey", #credentials[:verify_token],
       	"operation" => ["UPDATE"],
-				"callbackUrl" => ENV['GOOGLE_SUBSCRIPTION_PROXY'] + ENV['HOSTNAME'] + '/update_hue_card'
+        "callbackUrl" => ENV['GOOGLE_SUBSCRIPTION_PROXY'] + ENV['hostname'] + '/update_hue'
 			})
-      
-			puts 'Callback URL' + ENV['GOOGLE_SUBSCRIPTION_PROXY'] + ENV['HOSTNAME'] + '/update_hue_card'
-			puts 'User session ID' + session[:user_id].to_s
-			
 
     	insert_timeline_item( {
-      	text: hue_bulb[:name] + " bulb",
+        text: setting[:bulb].name + ' bulb',
       	notification: { level: 'DEFAULT' },
       	sourceItemId: 2002,
       	menuItems: [
         	{ 
 						action: 'CUSTOM',
 						id: 'update',
-						values: [ {
-							displayName: "Update",
-							iconUrl: 'http://i.imgur.com/DRZUngH.png'
-						} ]
+						values: [
+							{ state: "DEFAULT",
+								displayName: "Update",
+							  iconUrl: 'http://i.imgur.com/DRZUngH.png'
+							},
+							{ state: "PENDING",
+								displayName: "Updating..",
+							  iconUrl: 'http://i.imgur.com/DRZUngH.png'
+							},
+							{ state: "CONFIRMED",
+								displayName: "Updated",
+							  iconUrl: 'http://i.imgur.com/DRZUngH.png'
+							}
+						]
 					},
         	{ action: 'DELETE' },
 					{ action: 'TOGGLE_PINNED' } ]
       	} )
 
     	if (@result)
-      	redirect_to(root_path, :notice => "All Timelines inserted")
+        redirect_to(root_path, :notice => "Hue status has been sent to Glass.")
     	else
-      	redirect_to(root_path, :alert => "Timelines failed to insert. Please try again.")
+        redirect_to(root_path, :alert => "Hue status card has failed to send to Glass.")
     	end
     
   		else
@@ -69,11 +75,13 @@ class TimelineController < ApplicationController
 
   def update_hue
 
+    setting = update_hue_color
+    
 		credentials = User.get_credentials(session[:user_id])
 
   	data = {
-   		:client_id => ENV["GLASS_CLIENT_ID"],
-   		:client_secret => ENV["GLASS_CLIENT_SECRET"],
+      :client_id => ENV["glass_client_id"],
+      :client_secret => ENV["glass_client_secret"],
    		:refresh_token => credentials[:refresh_token],
    		:grant_type => "refresh_token"
 		}
@@ -90,7 +98,7 @@ class TimelineController < ApplicationController
     	@mirror = @client.discovered_api('mirror', 'v1')
     
     	patch_timeline_item( {
-      	text: dropcam_info[:title] + " Dropcam",
+        text: setting[:bulb].name + " bulb",
       	notification: { level: 'DEFAULT' },
       	sourceItemId: 1001,
 				menuItems: [
@@ -111,29 +119,33 @@ class TimelineController < ApplicationController
 	private
   
   def set_hue
-		require 'huey'
-		bulb = Huey::Bulb.find('Kitchen')
-    bulb.alert!
+    
+    Huey.configure do |config|
+      config.uuid = '0123456789abdcef0123456789abcdef'
+      config.hue_ip = ENV['bridge_wan_ip']
+    end
+    
+    bulb = Huey::Bulb.find('Kitchen')
+    color = Color::CSS['blue'].html
+    bulb.update(rgb: color, bri: 254)
 
-    #return {bulb: bulb}
+    return {bulb: bulb}
+    
+	end
+  
+  def update_hue_color
+    
+    Huey.configure do |config|
+      config.uuid = '0123456789abdcef0123456789abcdef'
+      config.hue_ip = ENV['bridge_wan_ip']
+    end
+    
+    bulb = Huey::Bulb.find('Kitchen')
+    color = Color::CSS['red'].html
+    bulb.update(rgb: color, bri: 254)
 
-
-  	#dropcam = Dropcam::Dropcam.new(ENV["DROPCAM_USERNAME"],ENV["DROPCAM_PASSWORD"])
-  	#camera = dropcam.cameras.second
-
-		# returns jpg image data of the latest frame captured
-		#screenshot = camera.screenshot.current
-		#filename = "#{camera.title}.jpg"
-
-		# write data to disk
-		#File.open(filename, 'wb') {|f| f.write(screenshot) }
-
-		# access and modify settings
-		# this disables the watermark on your camera stream
-		#settings = camera.settings
-		#settings["watermark.enabled"].set(false)
-
-	  #return {filename: filename, title: camera.title}
+    return {bulb: bulb}
+    
 	end
 
 
